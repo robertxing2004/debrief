@@ -42,7 +42,7 @@ export async function GET(request: Request): Promise<Response> {
 			return new Response(null, {
 				status: 302,
 				headers: {
-					Location: "/"
+					Location: "/" // redirect to user page
 				}
 			});
 		}
@@ -69,7 +69,7 @@ export async function GET(request: Request): Promise<Response> {
 		return new Response(null, {
 			status: 302,
 			headers: {
-				Location: "/"
+				Location: "/" // redirect to user page
 			}
 		});
 	} catch (e) {
