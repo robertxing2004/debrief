@@ -36,7 +36,7 @@ const createTables = async () => {
   await pool.query(`
     CREATE TABLE IF NOT EXISTS user_session (
       id TEXT PRIMARY KEY,
-      expires_at BIGINT NOT NULL,
+      expires_at TIMESTAMPTZ NOT NULL,
       user_id TEXT NOT NULL,
       FOREIGN KEY (user_id) REFERENCES auth_user(id) ON DELETE CASCADE
     );

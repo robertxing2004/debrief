@@ -1,4 +1,7 @@
 import Image from "next/image";
+import { lucia, getUser } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
 export default function Home() {
   return (
@@ -10,7 +13,7 @@ export default function Home() {
 
       {/* github login button */}
       <div>
-        <h1>Sign in</h1>
+        <h1 className="ml-[25vw] pl-8">Sign in</h1>
         <a className="ml-[25vw] p-2 rounded-[0.5em] bg-text-receive" href="/login/github ">Sign in with GitHub</a>
       </div>
     </main>

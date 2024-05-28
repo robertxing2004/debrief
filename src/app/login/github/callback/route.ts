@@ -45,7 +45,7 @@ export async function GET(request: Request): Promise<Response> {
 			return new Response(null, {
 				status: 302,
 				headers: {
-					Location: `/[${existingUser.id}]` // redirect to user page
+					Location: `/[${existingUser.login}]` // redirect to user page
 				}
 			});
 		}
@@ -72,10 +72,11 @@ export async function GET(request: Request): Promise<Response> {
 		return new Response(null, {
 			status: 302,
 			headers: {
-				Location: `/[${githubUser.id}]` // redirect to user page
+				Location: `/[${githubUser.login}]` // redirect to user page
 			}
 		});
 	} catch (e) {
+		console.log(e);
 		// the specific error message depends on the provider
 		if (e instanceof OAuth2RequestError) {
 			// invalid code
