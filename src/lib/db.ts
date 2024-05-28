@@ -12,14 +12,14 @@ const pool = new pg.Pool({
 });
 
 // tests
-pool.on('connect', () => {
-  console.log('Connected to the PostgreSQL database');
-});
+// pool.on('connect', () => {
+//   console.log('Connected to the PostgreSQL database');
+// });
 
-pool.on('error', (err: Error) => {
-  console.error('Unexpected error on idle client', err);
-  process.exit(-1);
-});
+// pool.on('error', (err: Error) => {
+//   console.error('Unexpected error on idle client', err);
+//   process.exit(-1);
+// });
 
 export default pool;
 

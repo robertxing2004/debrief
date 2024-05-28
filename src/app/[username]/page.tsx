@@ -11,7 +11,7 @@ export default async function Page({ params }: { params: { username: string } })
     return (
       <main>
         <div>
-          this is the user page for {`${params.username}`}
+          <h1 className="">this is the user page for {params.username}</h1>
         </div>
         <div>
           <form action={logout}>
