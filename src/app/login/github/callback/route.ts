@@ -45,7 +45,7 @@ export async function GET(request: Request): Promise<Response> {
 			return new Response(null, {
 				status: 302,
 				headers: {
-					Location: `/[${existingUser.login}]` // redirect to user page
+					Location: `/${existingUser.login}` // redirect to user page
 				}
 			});
 		}
@@ -72,7 +72,7 @@ export async function GET(request: Request): Promise<Response> {
 		return new Response(null, {
 			status: 302,
 			headers: {
-				Location: `/[${githubUser.login}]` // redirect to user page
+				Location: `/${githubUser.login}` // redirect to user page
 			}
 		});
 	} catch (e) {
