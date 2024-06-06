@@ -1,8 +1,3 @@
-import Image from "next/image";
-import { lucia, getUser } from "@/lib/auth";
-import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
-
 export default function Home() {
   return (
     <main>
