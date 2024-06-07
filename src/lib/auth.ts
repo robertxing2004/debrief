@@ -3,7 +3,6 @@ import { adapter } from "./db";
 import { GitHub } from "arctic";
 import { cookies } from "next/headers";
 import { cache } from "react";
-import type { Session, User } from "lucia";
 
 export const lucia = new Lucia(adapter, {
 	sessionCookie: {

@@ -1,6 +1,6 @@
 import { github, lucia } from "@/lib/auth";
 import { cookies } from "next/headers";
-import { GitHub, OAuth2RequestError } from "arctic";
+import { OAuth2RequestError } from "arctic";
 import { generateIdFromEntropySize } from "lucia";
 import pool from "../../../../lib/db"
 

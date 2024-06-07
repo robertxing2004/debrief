@@ -1,4 +1,3 @@
-import { Lucia } from "lucia";
 import { NodePostgresAdapter } from "@lucia-auth/adapter-postgresql";
 import pg from "pg";
 
