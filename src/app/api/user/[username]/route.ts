@@ -23,9 +23,13 @@ export async function GET(request: Request, { params }: { params: { username: st
           'X-GitHub-Api-Version': '2022-11-28'
         }
       });
-      return NextResponse.json(data);
+      const response =  NextResponse.json(data);
+      response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=300, stale-while-revalidate=59');
+      return response;
     } else {
-      return NextResponse.json({ message: 'User not found or no access token available' }, { status: 404 });
+      const response = NextResponse.json({ message: 'User not found or no access token available' }, { status: 404 });
+      response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=60');
+      return response;
     }
   }
   catch(e) {
