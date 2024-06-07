@@ -62,8 +62,8 @@ export async function GET(request: Request): Promise<Response> {
 		
 		// i believe this works
 		await pool.query(
-			`INSERT INTO auth_user(id, github_id, username) VALUES($1, $2, $3)`,
-			[userId, githubUser.id, githubUser.login]
+			`INSERT INTO auth_user(id, github_id, username, access_token) VALUES($1, $2, $3, $4)`,
+			[userId, githubUser.id, githubUser.login, tokens.accessToken]
 		);
 
 		const session = await lucia.createSession(userId, {});

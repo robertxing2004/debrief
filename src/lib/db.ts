@@ -29,7 +29,8 @@ const createTables = async () => {
     CREATE TABLE IF NOT EXISTS auth_user (
       id TEXT PRIMARY KEY,
       github_id INTEGER UNIQUE NOT NULL,
-      username TEXT NOT NULL
+      username TEXT NOT NULL,
+      access_token TEXT NOT NULL
     );
   `);
 
