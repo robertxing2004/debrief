@@ -1,5 +1,3 @@
-const { CohereClient } = require('cohere-ai');
-
 export const Characters = [
   {
     name: "Jasmine",
@@ -15,12 +13,6 @@ export default class Conversation {
 
   async sendMessage(message: string, character: number) {
     try {
-      console.log("test");
-      const key = process.env.COHERE_API_KEY;
-      const cohere = new CohereClient({
-        token: key,
-      });
-
       (async () => {
         // append sent message to chat history
         Characters[character].conversationHistory.push({
@@ -29,35 +21,33 @@ export default class Conversation {
         })
         // fetch response with cohere api
         console.log("making api call");
-        const response = await cohere.chat({
-          chatHistory: Characters[character].conversationHistory,
-          message: message,
-          preamble: Characters[character].personality
+        const response = await fetch('http://localhost:3000/api/cohere', {
+          method: 'POST',
+          body: JSON.stringify({
+            chatHistory: Characters[character].conversationHistory,
+            message: message,
+            preamble: Characters[character].personality
+          })
         });
 
-        if (response.statusCode !== 200) {
-          console.log("cohere error");
-          console.log(response.body.message);
-        }
-        else {
-          console.log("received api response");
-        console.log(response.text);
+        const data = await response.json();
+
+        console.log(data.text);
         // append received response to chat history
         Characters[character].conversationHistory.push({
           role: 'CHATBOT',
-          message: response.text
-        })
-        }        
+          message: data.text
+        })       
       })();
     }
-    catch(e) {
+    catch(e: any) {
       console.log(e);
       return "Error"
     }
   }
 }
 
-interface ConversationHistory {
+export interface ConversationHistory {
   role: string,
   message: string
 }

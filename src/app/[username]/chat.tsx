@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import Conversation from "@/lib/cohere";
+import { useState } from 'react';
+import Conversation from '@/lib/cohere';
 
 const chatHandler = new Conversation();
 
@@ -51,11 +51,14 @@ export default function Chat() {
   return (
     <>
       <h1>Chat Window</h1>
+      {/*maybe migrate actual messages to server side to hopefully fix cohere issue??*/}
       {
         messages.map((message: any, i: number) => {
           <div key={i}>{message.content}</div>
         })
       }
+
+      {/*i feel like this stuff needs to be server side but it's a form that needs useState*/}
       <form onSubmit={handleSubmit}>
         <input type="text" placeholder="debrief" value={input} onChange={(e) => setInput(e.target.value)}/>
         <button type="submit">Send</button>

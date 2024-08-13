@@ -1,34 +1,26 @@
 const { CohereClient } = require('cohere-ai');
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: Request, { params }: { params: { message: string, character: any }}) {
+export async function POST(req: NextRequest) {
   try {
-    console.log("test received");
+    const { chatHistory, message, preamble } = await req.json();
+
     const cohere = new CohereClient({
       token: process.env.COHERE_API_KEY,
     });
 
-    (async () => {
-      // append sent message to chat history
-      params.character.conversationHistory.push({
-        role: 'USER',
-        message: params.message
-      })
-      // fetch response with cohere api
-      const response = await cohere.chat({
-        chatHistory: params.character.conversationHistory,
-        message: params.message,
-        preamble: params.character.personality
-      });
+    // fetch response with cohere api
+    const response = await cohere.chat({
+      chatHistory: chatHistory,
+      message: message,
+      preamble: preamble
+    });
 
-      console.log(response);
-      // append received response to chat history
-      params.character.conversationHistory.push({
-        role: 'CHATBOT',
-        message: response
-      })
-    })();
+    console.log(response);
+    return NextResponse.json(response);
   }
   catch(error: any) {
     console.log(error);
   }
+  return NextResponse.json({ message : 'Request failed'});
 }
