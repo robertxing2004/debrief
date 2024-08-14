@@ -13,22 +13,22 @@ export default function Chat() {
     id: 0,
     path: '@/images/grad0.png'
   });
-  const [messages, setMessages] = useState([
-    {} as ChatMessage
-  ]);
+  const [messages, setMessages] = useState<ChatMessage[]>([])
 
-  const handleSubmit = async() => {
+  const handleSubmit = async(e: React.FormEvent) => {
+    e.preventDefault();
+
     if(input === "") {
       return
     }
 
-    const newMessage = {
-      message: input,
+    var newMessage = {
       role: 'USER',
+      content: input,
       direction: 'outgoing'
     };
 
-    const newMessages = [...messages, newMessage];
+    var newMessages = [...messages, newMessage];
     setMessages(newMessages);
     setInput("");
 
@@ -36,39 +36,52 @@ export default function Chat() {
     setIsTyping(true);
 
     // send to cohere api
-    console.log("sent to api")
     try {
-      const response = await chatHandler.sendMessage(newMessage.message, character.id);
+      const response = await chatHandler.sendMessage(newMessage.content, character.id);
       console.log(response);
+      newMessage = {
+        role: 'CHATBOT',
+        content: response,
+        direction: 'incoming'
+      }
     }
     catch(e) {
       console.log(e);
     }
 
+    
+
+    newMessages = [...messages, newMessage];
+    setMessages(newMessages);
+
     setIsTyping(false);
   }
 
   return (
-    <>
+    <div>
       <h1>Chat Window</h1>
-      {/*maybe migrate actual messages to server side to hopefully fix cohere issue??*/}
-      {
-        messages.map((message: any, i: number) => {
-          <div key={i}>{message.content}</div>
-        })
-      }
-
-      {/*i feel like this stuff needs to be server side but it's a form that needs useState*/}
+      <div>
+        {
+          messages.map((message: any, i: number) => {
+            return (
+              <div key={i} className={`text-${message.role === 'USER' ? 'right' : 'left'}`}>
+                <p>{message.content}</p>
+              </div>
+            )
+          })
+        }
+      </div>
+      
       <form onSubmit={handleSubmit}>
         <input type="text" placeholder="debrief" value={input} onChange={(e) => setInput(e.target.value)}/>
         <button type="submit">Send</button>
       </form>
-    </>
+    </div>
   );
 }
 
 interface ChatMessage {
-  message: string,
+  content: string,
   role: string
 }
 

@@ -13,36 +13,34 @@ export default class Conversation {
 
   async sendMessage(message: string, character: number) {
     try {
-      (async () => {
-        // append sent message to chat history
-        Characters[character].conversationHistory.push({
-          role: 'USER',
-          message: message
+      // fetch response with cohere api
+      const response = await fetch('http://localhost:3000/api/cohere', {
+        method: 'POST',
+        body: JSON.stringify({
+          chatHistory: Characters[character].conversationHistory,
+          message: message,
+          preamble: Characters[character].personality
         })
-        // fetch response with cohere api
-        console.log("making api call");
-        const response = await fetch('http://localhost:3000/api/cohere', {
-          method: 'POST',
-          body: JSON.stringify({
-            chatHistory: Characters[character].conversationHistory,
-            message: message,
-            preamble: Characters[character].personality
-          })
-        });
+      });
 
-        const data = await response.json();
-
-        console.log(data.text);
-        // append received response to chat history
-        Characters[character].conversationHistory.push({
-          role: 'CHATBOT',
-          message: data.text
-        })       
-      })();
+      const data = await response.json();
+      console.log(data);
+      console.log(data.text);
+      // append received response to chat history
+      Characters[character].conversationHistory.push({
+        role: 'USER',
+        message: message
+      },{
+        role: 'CHATBOT',
+        message: data.text
+      })  
+      
+      console.log(Characters[character].conversationHistory);
+      return data.text;
     }
     catch(e: any) {
       console.log(e);
-      return "Error"
+      return e.text
     }
   }
 }
