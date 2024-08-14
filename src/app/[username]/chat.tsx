@@ -28,11 +28,8 @@ export default function Chat() {
       direction: 'outgoing'
     };
 
-    var newMessages = [...messages, newMessage];
-    setMessages(newMessages);
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
     setInput("");
-
-    // set typing state true for chatbot response
     setIsTyping(true);
 
     // send to cohere api
@@ -44,15 +41,11 @@ export default function Chat() {
         content: response,
         direction: 'incoming'
       }
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
     }
     catch(e) {
       console.log(e);
     }
-
-    
-
-    newMessages = [...messages, newMessage];
-    setMessages(newMessages);
 
     setIsTyping(false);
   }
