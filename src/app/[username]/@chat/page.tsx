@@ -51,9 +51,9 @@ export default function Chat() {
   }
 
   return (
-    <div>
+    <div className="border-2 border-red-500 w-9/12 h-screen p-3 position-absolute float-right">
       <h1>Chat Window</h1>
-      <div>
+      <div className="">
         {
           messages.map((message: any, i: number) => {
             return (
@@ -65,7 +65,7 @@ export default function Chat() {
         }
       </div>
       
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="">
         <input type="text" placeholder="debrief" value={input} onChange={(e) => setInput(e.target.value)}/>
         <button type="submit">Send</button>
       </form>

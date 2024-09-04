@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { getUser, lucia } from "../../lib/auth";
+import { getUser, lucia } from "@/lib/auth";
 import { cookies } from "next/headers";
 
 export default async function Profile({ params }: { params: { username: string } }) {
@@ -31,7 +31,7 @@ export default async function Profile({ params }: { params: { username: string }
     const data = await res.json();
 
     return (
-      <main>
+      <div className="border-2 border-red-500 w-3/12 position-absolute">
         <div>
           <h1 className="">this is the user page for {params.username}</h1>
         </div>
@@ -43,7 +43,7 @@ export default async function Profile({ params }: { params: { username: string }
             <button>Sign out</button>
           </form>
         </div>
-      </main>
+      </div>
     );
   }
 }
