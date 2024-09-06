@@ -31,7 +31,7 @@ export default async function Profile({ params }: { params: { username: string }
     const data = await res.json();
 
     return (
-      <div className="border-2 border-red-500 w-3/12 position-absolute">
+      <div className="w-3/12 position-absolute">
         <div>
           <h1 className="">this is the user page for {params.username}</h1>
         </div>
